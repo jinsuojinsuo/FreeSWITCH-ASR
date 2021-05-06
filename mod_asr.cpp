@@ -22,7 +22,7 @@
      SWITCH_MODULE_DEFINITION(mod_asr, mod_asr_load, mod_asr_shutdown, NULL);
  };
 
- NlsClient nlc;
+ NlsClient *nlc = NlsClient::getInstance(false);
  NlsSpeechCallback  callback;
 
 typedef struct {
@@ -109,14 +109,18 @@ static switch_bool_t asr_callback(switch_media_bug_t *bug, void *user_data, swit
     switch (type) {
     case SWITCH_ABC_TYPE_INIT:
         {
-
+		switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_WARNING, "99999999:%s\n", switch_channel_get_name(channel));
 
 #ifdef _WIN32
-            pvt->request = nlc.createRealTimeRequest(&callback, "config-realtime.txt");
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_WARNING, "77777777:%s\n", switch_channel_get_name(channel));
+            pvt->request = nlc->createRealTimeRequest(&callback, "config-realtime.txt");
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_WARNING, "44444444:%s\n", switch_channel_get_name(channel));
 #else
-            pvt->request = nlc.createRealTimeRequest(&callback, "/etc/config-realtime.txt");
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_WARNING, "66666666:%s\n", switch_channel_get_name(channel));
+            pvt->request = nlc->createRealTimeRequest(&callback, "/etc/config-realtime.txt");
+			switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_WARNING, "55555555:%s\n", switch_channel_get_name(channel));
 #endif
-
+		switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_WARNING, "88888888:%s\n", switch_channel_get_name(channel));
             if (pvt->request) {
 
                 pvt->request->SetParam("Id", switch_channel_get_name(channel));
